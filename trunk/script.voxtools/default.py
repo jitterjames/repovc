@@ -1,9 +1,7 @@
 #script.voxtools
+#version="0.1.2" 
 
-import xbmc,  xbmcgui, sys, re, StorageServer
-from xml.etree.ElementTree import Element, SubElement, Comment, tostring
-from xbmc import getCondVisibility, getInfoLabel
-
+import xbmc,  xbmcgui, sys, re
 
 def getcurrentvolas_string():
     volume_query = '{"jsonrpc": "2.0", "method": "Application.GetProperties", "params": { "properties": [ "volume" ] }, "id": 1}'
@@ -38,11 +36,16 @@ def mysetvol(strvol):
             xbmc.sleep(50)
     xbmc.executebuiltin("SetVolume("+strvol+")")
 
-def storeVal(strName,strVal):
-    cache = StorageServer.StorageServer("VoxTools", 1) # (Your plugin name, Cache time in hours)
-    cache.table_name = "VoxTools"
-    cache.set(strName,strVal) 
 
+def smart_playlist_full(fulltext):    
+    myFileName = xbmc.translatePath("special://temp/voxsmart.xsp")
+    vcFile = open(myFileName, "w")
+    vcFile.write(fulltext)
+    vcFile.close()
+    #xbmc.executebuiltin("XBMC.ActivateWindow(music,special://temp/voxsmart.xsp)")
+    
+
+    
 cmdtype = sys.argv[1].split("=", 1)[1].lower()
 cmdparm1 = sys.argv[2].split("=", 1)[1]
 #xbmcgui.Dialog().ok("a"+"B",cmdtype+"  :  "+cmdparm1)
@@ -53,6 +56,11 @@ elif cmdtype == "execbuiltin":
     xbmc.executebuiltin(cmdparm1)
 elif cmdtype == "setvol":    
     mysetvol(cmdparm1)
+elif cmdtype == "smartpl":    
+    smart_playlist_full(cmdparm1)
+
+
+
     #storeVal("volume",cmdparm1)
     
         
