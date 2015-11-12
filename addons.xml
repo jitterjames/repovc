@@ -2,7 +2,7 @@
 <addons>
 <addon id="script.voxtools"
        name="VoxCommando Tools"
-       version="0.1.4" 
+       version="0.2.0" 
        provider-name="jitterjames">
   <requires>
 		<import addon="xbmc.python" version="2.1.0"/>
